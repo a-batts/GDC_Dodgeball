@@ -3,8 +3,8 @@ import java.awt.EventQueue;
 
 public class Dodgeball extends JFrame {
 
-    final static int SCREEN_HEIGHT = 500;
-    final static int SCREEN_WIDTH = 500;
+    final static int SCREEN_HEIGHT = 700;
+    final static int SCREEN_WIDTH = 1000;
 
     public Dodgeball(){
         load();
@@ -15,6 +15,7 @@ public class Dodgeball extends JFrame {
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         setTitle("Cat Dodgeball");
 
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
