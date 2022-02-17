@@ -21,7 +21,7 @@ public class Collision {
         int spriteRightBound = scr_width;
 
         if (sprite instanceof Player)
-            spriteTopBound = scr_height / 2;
+            spriteTopBound = Dodgeball.SCREEN_HEIGHT / 2;
 
         return switch (direction) {
             case "TOP" -> sprite_y - sprite.change_y > spriteTopBound;
@@ -31,4 +31,18 @@ public class Collision {
             default -> true;
         };
     }
+
+    public boolean atXBoundry(){
+        return ! (canMove("TOP") && canMove("BOTTOM"));
+    }
+
+    public boolean atYBoundry(){
+        return ! (canMove("LEFT") && canMove("RIGHT"));
+    }
+
+    public static boolean isCollidingWithOther(Sprite a, Sprite b){
+        return a.getBounds().intersects(b.getBounds());
+    }
+
+
 }
