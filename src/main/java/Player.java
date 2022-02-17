@@ -34,6 +34,7 @@ public class Player extends Sprite{
             case KeyEvent.VK_D -> change_x = step;
             case KeyEvent.VK_LEFT -> angled = "WEST";
             case KeyEvent.VK_RIGHT -> angled = "EAST";
+            case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> angled = facing;
             case KeyEvent.VK_SPACE -> throwBall();
         }
     }
