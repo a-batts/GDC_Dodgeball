@@ -3,11 +3,15 @@ import java.awt.*;
 import java.io.File;
 
 public class Sprite {
-    private Image image;
-    private int width, height;
-    private int x_pos, y_pos;
+    protected Image image;
+
+    protected int width, height;
+    protected int x_pos, y_pos;
     protected double change_x, change_y;
-    private double speed;
+    protected double speed;
+    protected boolean visible = true;
+    protected String facing = "NORTH";
+    protected String angled = "NORTH";
 
     public Sprite(String path, double scale, int x, int y, double speed){
         display(path, scale);
@@ -16,7 +20,7 @@ public class Sprite {
         this.speed = speed;
     }
 
-    public Sprite(String path, double scale){
+    public Sprite(String path, double scale, double speed){
         this(path, scale, 0, 0, 1);
     }
 
@@ -44,6 +48,11 @@ public class Sprite {
             y_pos += change_y * speed;
     }
 
+    protected void setPosition(int x_pos, int y_pos){
+        this.x_pos = x_pos;
+        this.y_pos = y_pos;
+    }
+
     public int getX_pos(){
         return x_pos;
     }
@@ -62,5 +71,13 @@ public class Sprite {
 
     public Image getImage(){
         return image;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x_pos, y_pos, width, height);
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 }
