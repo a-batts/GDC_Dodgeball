@@ -13,6 +13,7 @@ public class Gameboard extends JPanel implements ActionListener {
         setup();
     }
 
+
     public void setup() {
         addKeyListener(new KeyPress());
         setFocusable(true);

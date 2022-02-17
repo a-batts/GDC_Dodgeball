@@ -13,7 +13,6 @@ public class Player extends Sprite{
     }
 
     public void eventKeyPress(KeyEvent e){
-        System.out.println(getX_pos() + "," + getY_pos());
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_UP -> change_y = -step;
