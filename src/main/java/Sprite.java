@@ -33,8 +33,15 @@ public class Sprite {
     }
 
     public void move(){
-        x_pos += change_x * speed;
-        y_pos += change_y * speed;
+        Collision collisions = new Collision(this);
+        if (collisions.canMove("LEFT") && change_x < 0)
+            x_pos += change_x * speed;
+        if (collisions.canMove("RIGHT") && change_x >= 0)
+            x_pos += change_x * speed;
+        if (collisions.canMove("TOP") && change_y < 0)
+            y_pos += change_y * speed;
+        if (collisions.canMove("BOTTOM") && change_y >= 0)
+            y_pos += change_y * speed;
     }
 
     public int getX_pos(){
