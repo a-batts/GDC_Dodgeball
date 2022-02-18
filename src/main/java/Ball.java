@@ -7,7 +7,11 @@ public class Ball extends Sprite{
     private final double THROW_DISTANCE = Dodgeball.SCREEN_HEIGHT * .5;
 
     public Ball(int movementStep, int x_pos, int y_pos){
-        super("src/main/resources/sprite/dodgeball.png", .75, 2);
+        super(.75, 2, 0, 2);
+        String path = "src/main/resources/sprite/dodgeball.png";
+        SpritesheetBuilder builder = new SpritesheetBuilder().setFile(path);
+        buildSprites(builder, true);
+
         this.step = movementStep;
         this.setPosition(x_pos - this.getWidth() / 2, y_pos - this.getHeight() / 2);
     }
