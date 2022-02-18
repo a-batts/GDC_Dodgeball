@@ -21,7 +21,7 @@ public class Collision {
         int spriteRightBound = scr_width;
 
         if (sprite instanceof Player)
-            spriteTopBound = Dodgeball.SCREEN_HEIGHT / 2;
+            spriteTopBound = Dodgeball.SCREEN_MIDPOINT;
 
         return switch (direction) {
             case "TOP" -> sprite_y - sprite.change_y > spriteTopBound;

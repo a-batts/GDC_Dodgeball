@@ -21,15 +21,15 @@ public class Gameboard extends JPanel implements ActionListener {
     public void setup() {
         addKeyListener(new KeyPress());
         setFocusable(true);
-        setBackground(Color.ORANGE);
+
 
         player = new Player();
 
         int xStep = Dodgeball.SCREEN_WIDTH / NUMBER_BALLS / 2;
-        int currentX = xStep;
+        int currentX = xStep - 5;
 
         for (int i = 0; i < NUMBER_BALLS; i++){
-            balls.add(new Ball(2, currentX, Dodgeball.SCREEN_HEIGHT / 2));
+            balls.add(new Ball(2, currentX, Dodgeball.SCREEN_MIDPOINT));
             currentX += (2 * xStep);
         }
 
@@ -76,11 +76,14 @@ public class Gameboard extends JPanel implements ActionListener {
     private void draw(Graphics graphics) {
         Graphics2D painter = (Graphics2D) graphics;
 
-        painter.drawImage(player.currentSprite(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
+        Image background = new ImageIcon("src/main/resources/floor.png").getImage();
+        painter.drawImage(background, -7, 0, this);
+
         for(Ball b: balls){
             if (b.isVisible())
                 painter.drawImage(b.currentSprite(),b.getX_pos(), b.getY_pos(), b.getWidth(), b.getHeight(), this);
         }
+        painter.drawImage(player.currentSprite(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
     }
 
     private class KeyPress extends KeyAdapter {

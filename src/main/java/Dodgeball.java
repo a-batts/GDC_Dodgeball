@@ -5,8 +5,11 @@ public class Dodgeball extends JFrame {
 
     final static int SCREEN_HEIGHT = 700;
     final static int SCREEN_WIDTH = 1000;
+    static int SCREEN_MIDPOINT;
 
     public Dodgeball(){
+        SCREEN_MIDPOINT = SCREEN_HEIGHT / 2 - 15;
+
         load();
     }
 
