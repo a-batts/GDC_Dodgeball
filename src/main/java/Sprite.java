@@ -1,39 +1,47 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Sprite {
-    protected Image image;
+    protected Image currentSprite;
+    protected Spritesheet sprites;
 
     protected int width, height;
     protected int x_pos, y_pos;
     protected double change_x, change_y;
     protected double speed;
+    protected double scale;
     protected boolean visible = true;
     protected String facing = "NORTH";
     protected String angled = "NORTH";
 
-    public Sprite(String path, double scale, int x, int y, double speed){
-        display(path, scale);
+    public Sprite(double scale, int x, int y, double speed){
+        this.scale = scale;
         x_pos = x;
         y_pos = y;
         this.speed = speed;
     }
 
-    public Sprite(String path, double scale, double speed){
-        this(path, scale, 0, 0, 1);
+    public Sprite(double scale, double speed){
+        this(scale, 0, 0, 1);
     }
 
-    private void display(String path, double scale){
-        if (! new File(path).exists()){
-            JOptionPane.showMessageDialog(null, "An asset does not exist");
-        }
-        else{
-            ImageIcon icon = new ImageIcon(path);
-            this.image = icon.getImage();
-            width = (int) (image.getWidth(null) * scale);
-            height = (int) (image.getHeight(null) * scale);
-        }
+    public void buildSprites(SpritesheetBuilder builder){
+        sprites = builder.build();
+        setCurrentSprite(0);
+    }
+
+    public void buildSprites(SpritesheetBuilder builder, boolean isSingleSprite){
+        sprites = builder.build(isSingleSprite);
+        setCurrentSprite(0);
+    }
+
+    public void setCurrentSprite(int id){
+        currentSprite = sprites.getSprite(id).getImage();
+        width = (int) (currentSprite.getWidth(null) * scale);
+        height = (int) (currentSprite.getHeight(null) * scale);
     }
 
     public void move(){
@@ -69,8 +77,8 @@ public class Sprite {
         return height;
     }
 
-    public Image getImage(){
-        return image;
+    public Image currentSprite(){
+        return currentSprite;
     }
 
     public Rectangle getBounds() {
