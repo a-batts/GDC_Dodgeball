@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -74,8 +75,6 @@ public class Player extends Sprite{
                 change_x = step;
                 setCurrentSprite(31);
             }
-            case KeyEvent.VK_LEFT -> angled = "WEST";
-            case KeyEvent.VK_RIGHT -> angled = "EAST";
             case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> angled = facing;
             case KeyEvent.VK_SPACE -> throwBall();
         }
@@ -87,11 +86,19 @@ public class Player extends Sprite{
             case KeyEvent.VK_W, KeyEvent.VK_S -> change_y = 0;
             case KeyEvent.VK_A -> {
                 change_x = 0;
-                setCurrentSprite(43);
+                angled = "WEST";
+                if(facing.equals("SOUTH"))
+                    setCurrentSprite(51);
+                else
+                    setCurrentSprite(43);
             }
             case KeyEvent.VK_D -> {
                 change_x = 0;
-                setCurrentSprite(38);
+                angled = "EAST";
+                if(facing.equals("SOUTH"))
+                    setCurrentSprite(29);
+                else
+                    setCurrentSprite(38);
             }
         }
     }
@@ -114,7 +121,7 @@ public class Player extends Sprite{
             }
             else{
                 changeY = -b.getStep();
-                y_pos = getBounds().y - getBounds().height / 2;
+                y_pos = getBounds().y - getBounds().height / 2 - 5;
             }
             switch (angled){
                 case "EAST" -> changeX = 2;
@@ -144,5 +151,9 @@ public class Player extends Sprite{
     public void removeLife(){
         if (lives > 0)
             lives--;
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x_pos, y_pos, width, height);
     }
 }
