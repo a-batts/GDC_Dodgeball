@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Gameboard extends JPanel implements ActionListener {
 
@@ -22,7 +21,7 @@ public class Gameboard extends JPanel implements ActionListener {
     public void setup() {
         addKeyListener(new KeyPress());
         setFocusable(true);
-        setBackground(Color.DARK_GRAY);
+        setBackground(Color.ORANGE);
 
         player = new Player();
 
@@ -77,10 +76,10 @@ public class Gameboard extends JPanel implements ActionListener {
     private void draw(Graphics graphics) {
         Graphics2D painter = (Graphics2D) graphics;
 
-        painter.drawImage(player.getImage(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
+        painter.drawImage(player.currentSprite(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
         for(Ball b: balls){
             if (b.isVisible())
-                painter.drawImage(b.getImage(),b.getX_pos(), b.getY_pos(), b.getWidth(), b.getHeight(), this);
+                painter.drawImage(b.currentSprite(),b.getX_pos(), b.getY_pos(), b.getWidth(), b.getHeight(), this);
         }
     }
 
