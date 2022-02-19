@@ -15,7 +15,7 @@ public class Collision {
     }
 
     public boolean canMove(String direction){
-        int spriteTopBound = 0;
+        int spriteTopBound = 40;
         int spriteBottomBound = scr_height;
         int spriteLeftBound = 0;
         int spriteRightBound = scr_width;

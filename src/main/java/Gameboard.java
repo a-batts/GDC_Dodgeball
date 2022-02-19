@@ -11,12 +11,11 @@ public class Gameboard extends JPanel implements ActionListener {
     private Player player;
     private final ArrayList<Ball> balls = new ArrayList<>();
 
-    private final int NUMBER_BALLS = 6;
+    static final int TICK_DELAY_MS = 10;
 
     public Gameboard(){
         setup();
     }
-
 
     public void setup() {
         addKeyListener(new KeyPress());
@@ -24,15 +23,16 @@ public class Gameboard extends JPanel implements ActionListener {
 
         player = new Player();
 
-        int xStep = Dodgeball.SCREEN_WIDTH / NUMBER_BALLS / 2;
+        int numberBalls = 6;
+        int xStep = Dodgeball.SCREEN_WIDTH / numberBalls / 2;
         int currentX = xStep - 5;
 
-        for (int i = 0; i < NUMBER_BALLS; i++){
+        for (int i = 0; i < numberBalls; i++){
             balls.add(new Ball(2, currentX, Dodgeball.SCREEN_MIDPOINT));
             currentX += (2 * xStep);
         }
 
-        Timer timer = new Timer(5, this);
+        Timer timer = new Timer(TICK_DELAY_MS, this);
         timer.start();
     }
 

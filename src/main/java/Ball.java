@@ -4,7 +4,9 @@ public class Ball extends Sprite{
 
     private final int step;
     private boolean isMoving = false;
+
     private int[] throwPosition;
+    private int timeMoving = 0;
 
     private final double THROW_DISTANCE = Dodgeball.SCREEN_HEIGHT * .5;
 
@@ -20,6 +22,7 @@ public class Ball extends Sprite{
 
     public void thrown(int change_x, int change_y){
         isMoving = true;
+        timeMoving = 0;
         this.change_x = change_x;
         this.change_y = change_y;
         throwPosition = new int[]{x_pos , y_pos};
@@ -34,21 +37,34 @@ public class Ball extends Sprite{
             change_x = step;
         else if (!collisions.canMove("RIGHT"))
             change_x = -step;
+        else if (!collisions.canMove("TOP")){
+            change_y = step;
+        }
+        else if (!collisions.canMove("BOTTOM")){
+            change_y = -step;
+        }
 
         //Need to add test sound file in to check if sound class works
-        //Sound bounce = new Sound("src/main/resources/bounce.wav");
+        //Sound bounce = new Sound("src/main/resources/sound/bounce.wav");
 
     }
 
     @Override
     public void move(){
-        if (this.y_pos > throwPosition[1] - THROW_DISTANCE){
+        timeMoving = (timeMoving + Gameboard.TICK_DELAY_MS);
+
+        double speed = (30 -  .15 * ((timeMoving - 12) ^ 2));
+        if (change_y < 0)
+            change_y = -speed;
+        else
+            change_y = speed;
+
+        if(speed > 0) {
             Collision collisions = new Collision(this);
-            if (collisions.atYBoundry())
+            if (collisions.atYBoundry() || collisions.atXBoundry()){
                 bounce(collisions);
+            }
             super.move();
-            if (collisions.atXBoundry())
-                isMoving = false;
         }
         else
             isMoving = false;
