@@ -22,7 +22,6 @@ public class Gameboard extends JPanel implements ActionListener {
         addKeyListener(new KeyPress());
         setFocusable(true);
 
-
         player = new Player();
 
         int xStep = Dodgeball.SCREEN_WIDTH / NUMBER_BALLS / 2;
@@ -84,6 +83,28 @@ public class Gameboard extends JPanel implements ActionListener {
                 painter.drawImage(b.currentSprite(),b.getX_pos(), b.getY_pos(), b.getWidth(), b.getHeight(), this);
         }
         painter.drawImage(player.currentSprite(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
+
+        drawScoreboard(painter);
+    }
+
+    private void drawScoreboard(Graphics2D painter) {
+        int step = 15;
+        int x_pos = 25;
+        int spriteSize = 30;
+
+        Image life = new ImageIcon("src/main/resources/sprite/life.png").getImage();
+        for(int i = 0; i < player.getLives(); i ++){
+            painter.drawImage(life, x_pos, 30, spriteSize, spriteSize, this);
+            x_pos = x_pos + step + spriteSize;
+        }
+
+        Image ball = new ImageIcon("src/main/resources/sprite/dodgeball_outlined.png").getImage();
+        x_pos = Dodgeball.SCREEN_WIDTH - 70;
+        for(int i = 0; i < player.inventorySize(); i ++){
+            painter.drawImage(ball, x_pos, 30, spriteSize, spriteSize, this);
+            x_pos = x_pos - step - spriteSize;
+        }
+
     }
 
     private class KeyPress extends KeyAdapter {
