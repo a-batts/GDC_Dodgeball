@@ -148,12 +148,17 @@ public class Player extends Sprite{
         return inventory;
     }
 
+    public Rectangle getBounds() {
+        return new Rectangle(x_pos, y_pos, width, height);
+    }
+
+    public int getLives(){
+        return lives;
+    }
+
     public void removeLife(){
         if (lives > 0)
             lives--;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x_pos, y_pos, width, height);
-    }
 }
