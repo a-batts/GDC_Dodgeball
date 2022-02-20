@@ -56,24 +56,28 @@ public class Player extends Sprite{
         int key = e.getKeyCode();
         switch (key) {
             case KeyEvent.VK_W -> {
+                int[] frames = {39, 40, 41, 42};
                 change_y = -step;
                 facing = "NORTH";
                 angled = "NORTH";
-                setCurrentSprite(41);
+                setCurrentSprite(frames[(int) (Math.random() * 4)]);
             }
             case KeyEvent.VK_S -> {
+                int[] frames = {23, 24, 25, 26};
                 change_y = step;
                 facing = "SOUTH";
                 angled = "SOUTH";
-                setCurrentSprite(23);
+                setCurrentSprite(frames[(int) (Math.random() * 4)]);
             }
             case KeyEvent.VK_A -> {
+                int[] frames = {47, 48, 49, 50};
                 change_x = -step;
-                setCurrentSprite(48);
+                setCurrentSprite(frames[(int) (Math.random() * 4)]);
             }
             case KeyEvent.VK_D -> {
+                int[] frames = {31, 32, 33, 34};
                 change_x = step;
-                setCurrentSprite(31);
+                setCurrentSprite(frames[(int) (Math.random() * 4)]);
             }
             case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> angled = facing;
             case KeyEvent.VK_SPACE -> throwBall();
