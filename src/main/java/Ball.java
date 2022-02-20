@@ -54,7 +54,7 @@ public class Ball extends Sprite{
     public void move(){
         timeInMotion = (timeInMotion + Gameboard.TICK_DELAY_MS);
 
-        double speed = (30 -  .15 * ((timeInMotion - 12) ^ 2));
+        double speed = (15 -  .05 * ((timeInMotion - 18) ^ 2));
         if (change_y < 0)
             change_y = -speed;
         else
