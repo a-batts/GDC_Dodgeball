@@ -57,6 +57,12 @@ public class Gameboard extends JPanel implements ActionListener {
                     b.move();
                     b.stopMoving();
                 }
+
+                ArrayList<Sprite> spr = new ArrayList<Sprite>(balls);
+                if (Collision.isCollidingWithOther(b, spr)){
+                    Ball ballToMove = (Ball) Collision.getCollidedWith(b, spr);
+                    ballToMove.collide(b);
+                }
             }
             else{
                 if (player.inventorySize() < 2 && Collision.isCollidingWithOther(player, b))

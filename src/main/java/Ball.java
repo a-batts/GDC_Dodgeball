@@ -1,12 +1,10 @@
-import java.awt.geom.Ellipse2D;
-
 public class Ball extends Sprite{
 
     private final int step;
     private boolean isMoving = false;
 
     private int[] throwPosition;
-    private int timeMoving = 0;
+    private int timeInMotion = 0;
 
     private final double THROW_DISTANCE = Dodgeball.SCREEN_HEIGHT * .5;
 
@@ -22,14 +20,10 @@ public class Ball extends Sprite{
 
     public void thrown(int change_x, int change_y){
         isMoving = true;
-        timeMoving = 0;
+        timeInMotion = 0;
         this.change_x = change_x;
         this.change_y = change_y;
         throwPosition = new int[]{x_pos , y_pos};
-    }
-
-    public boolean isMoving(){
-        return isMoving;
     }
 
     public void bounce(Collision collisions){
@@ -49,11 +43,18 @@ public class Ball extends Sprite{
 
     }
 
+    public void collide(Ball hitBy) {
+        hitBy.stopMoving();
+        change_y = hitBy.change_y;
+        timeInMotion = hitBy.getTimeInMotion();
+        isMoving = true;
+    }
+
     @Override
     public void move(){
-        timeMoving = (timeMoving + Gameboard.TICK_DELAY_MS);
+        timeInMotion = (timeInMotion + Gameboard.TICK_DELAY_MS);
 
-        double speed = (30 -  .15 * ((timeMoving - 12) ^ 2));
+        double speed = (30 -  .15 * ((timeInMotion - 12) ^ 2));
         if (change_y < 0)
             change_y = -speed;
         else
@@ -77,4 +78,11 @@ public class Ball extends Sprite{
     public int getStep(){
         return step;
     }
+
+    public boolean isMoving(){
+        return isMoving;
+    }
+
+    public int getTimeInMotion() { return timeInMotion; }
+
 }

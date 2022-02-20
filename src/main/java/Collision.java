@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Collision {
 
     Sprite sprite;
@@ -43,6 +45,23 @@ public class Collision {
     public static boolean isCollidingWithOther(Sprite a, Sprite b){
         return a.getBounds().intersects(b.getBounds());
     }
+
+    public static boolean isCollidingWithOther(Sprite a, ArrayList<Sprite> b){
+        for(Sprite s: b){
+            if (a.getBounds().intersects(s.getBounds()) && s != a)
+                return true;
+        }
+        return false;
+    }
+
+    public static Sprite getCollidedWith(Sprite a, ArrayList<Sprite> b) {
+        for(Sprite s: b){
+            if (isCollidingWithOther(a, s))
+                return s;
+        }
+        return null;
+    }
+
 
 
 }
