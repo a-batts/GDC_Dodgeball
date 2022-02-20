@@ -3,10 +3,7 @@ public class Ball extends Sprite{
     private final int step;
     private boolean isMoving = false;
 
-    private int[] throwPosition;
     private int timeInMotion = 0;
-
-    private final double THROW_DISTANCE = Dodgeball.SCREEN_HEIGHT * .5;
 
     public Ball(int movementStep, int x_pos, int y_pos){
         super(1, 2, 0, 2);
@@ -23,7 +20,6 @@ public class Ball extends Sprite{
         timeInMotion = 0;
         this.change_x = change_x;
         this.change_y = change_y;
-        throwPosition = new int[]{x_pos , y_pos};
     }
 
     public void bounce(Collision collisions){
