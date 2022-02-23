@@ -1,3 +1,5 @@
+package com.gdc;
+
 import javax.swing.*;
 import java.awt.EventQueue;
 
@@ -16,7 +18,7 @@ public class Dodgeball extends JFrame {
     public void load(){
         add(new Gameboard());
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        setTitle("Cat Dodgeball");
+        setTitle("Cat com.gdc.Dodgeball");
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

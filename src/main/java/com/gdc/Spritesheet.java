@@ -1,3 +1,5 @@
+package com.gdc;
+
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

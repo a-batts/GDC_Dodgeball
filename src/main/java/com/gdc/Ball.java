@@ -1,3 +1,5 @@
+package com.gdc;
+
 public class Ball extends Sprite{
 
     private final int step;
@@ -35,7 +37,7 @@ public class Ball extends Sprite{
         }
 
         //Need to add test sound file in to check if sound class works
-        //Sound bounce = new Sound("src/main/resources/sound/bounce.wav");
+        //com.gdc.Sound bounce = new com.gdc.Sound("src/main/resources/sound/bounce.wav");
 
     }
 

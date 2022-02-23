@@ -1,3 +1,5 @@
+package com.gdc;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.io.FileInputStream;

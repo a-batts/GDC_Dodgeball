@@ -1,3 +1,5 @@
+package com.gdc;
+
 import java.awt.Image;
 import java.awt.Rectangle;
 

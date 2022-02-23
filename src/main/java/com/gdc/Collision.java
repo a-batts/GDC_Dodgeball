@@ -1,3 +1,5 @@
+package com.gdc;
+
 import java.util.ArrayList;
 
 public class Collision {
