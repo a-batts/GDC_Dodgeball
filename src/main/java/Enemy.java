@@ -8,6 +8,8 @@ public class Enemy extends Sprite {
     private int lives;
     private ArrayList<Ball> inventory = new ArrayList<>();
 
+    public static int INIT_LIVES = 3;
+
     public Enemy(){
         this(3);
     }
@@ -48,7 +50,7 @@ public class Enemy extends Sprite {
 
         this.step = movementStep;
         this.facing = "SOUTH";
-        this.lives = 3;
+        this.lives = INIT_LIVES;
     }
 
     public void move(ArrayList<Ball> balls, Player player){
