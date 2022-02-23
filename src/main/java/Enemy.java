@@ -13,7 +13,7 @@ public class Enemy extends Sprite {
     }
 
     public Enemy(int movementStep) {
-        super(2.5, Dodgeball.SCREEN_WIDTH / 2, 100, 1);
+        super(2.5, Dodgeball.SCREEN_WIDTH / 2, 100, 1.01);
 
         String dir = "src/main/resources/sprite/player/";
         File[] files = new File(dir).listFiles();
