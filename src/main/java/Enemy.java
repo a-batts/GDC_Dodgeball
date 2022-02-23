@@ -52,16 +52,10 @@ public class Enemy extends Sprite {
     }
 
     public void move(ArrayList<Ball> balls, Player player){
-        /**
-         * 3 different conditions
-         * If enemy.inventorySize() = 0, locate the nearest ball and move towards it
-         * Else if player shares the same x value as player, walk forward (increase y value) and then throw
-         * Else move randomly based on ability to move
-         */
         change_x = 0;
         change_y = 0;
         if(inventorySize() == 0){
-            int lowestDistance = 1000;
+            int lowestDistance = Integer.MAX_VALUE;
             Ball closestBall = null;
             for(Ball b: balls){
                 if (! b.isMoving() && b.getY_pos() < Dodgeball.SCREEN_MIDPOINT){
@@ -74,7 +68,7 @@ public class Enemy extends Sprite {
             }
             if (closestBall == null)
                 randomStep(player);
-            else{
+            else {
                 if (closestBall.getY_pos() > getY_pos())
                     change_y = step;
                 else if (closestBall.getY_pos() < getY_pos())
@@ -87,9 +81,10 @@ public class Enemy extends Sprite {
         }
         else if (getX_pos() == player.getX_pos()){
             int probability = (int) (Math.random() * 3);
-            if (probability == 2)
+            if (probability == 2){
                 change_y = step;
                 throwBall();
+            }
         }
         else
             randomStep(player);
