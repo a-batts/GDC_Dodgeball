@@ -1,23 +1,19 @@
-import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Player extends Sprite{
+public class Enemy extends Sprite {
 
     private final int step;
     private int lives;
     private ArrayList<Ball> inventory = new ArrayList<>();
 
-    public Player(){
+    public Enemy(){
         this(3);
     }
 
-    public Player(int movementStep){
-        super(2.5, Dodgeball.SCREEN_WIDTH / 2, Dodgeball.SCREEN_HEIGHT - 100, 1.5);
+    public Enemy(int movementStep) {
+        super(2.5, Dodgeball.SCREEN_WIDTH / 2, 100, 1);
 
         String dir = "src/main/resources/sprite/player/";
         File[] files = new File(dir).listFiles();
@@ -51,66 +47,71 @@ public class Player extends Sprite{
         setCurrentSprite(16);
 
         this.step = movementStep;
+        this.facing = "SOUTH";
         this.lives = 3;
     }
 
-    public void eventKeyPress(KeyEvent e){
-        int key = e.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_W -> {
-                int[] frames = {39, 40, 41, 42};
-                change_y = -step;
-                facing = "NORTH";
-                angled = "NORTH";
-                setCurrentSprite(frames[(int) (Math.random() * 4)]);
+    public void move(ArrayList<Ball> balls, Player player){
+        /**
+         * 3 different conditions
+         * If enemy.inventorySize() = 0, locate the nearest ball and move towards it
+         * Else if player shares the same x value as player, walk forward (increase y value) and then throw
+         * Else move randomly based on ability to move
+         */
+        change_x = 0;
+        change_y = 0;
+        if(inventorySize() == 0){
+            int lowestDistance = 1000;
+            Ball closestBall = null;
+            for(Ball b: balls){
+                if (! b.isMoving() && b.getY_pos() < Dodgeball.SCREEN_MIDPOINT){
+                    int distance = this.calculateDistance(b);
+                    if (distance < lowestDistance){
+                        lowestDistance = distance;
+                        closestBall = b;
+                    }
+                }
             }
-            case KeyEvent.VK_S -> {
-                int[] frames = {23, 24, 25, 26};
-                change_y = step;
-                facing = "SOUTH";
-                angled = "SOUTH";
-                setCurrentSprite(frames[(int) (Math.random() * 4)]);
+            if (closestBall == null)
+                randomStep(player);
+            else{
+                if (closestBall.getY_pos() > getY_pos())
+                    change_y = step;
+                else if (closestBall.getY_pos() < getY_pos())
+                    change_y = -step;
+                if (closestBall.getX_pos() > getX_pos())
+                    change_x = step;
+                else if (closestBall.getX_pos() < getX_pos())
+                    change_x = -step;
             }
-            case KeyEvent.VK_A -> {
-                int[] frames = {47, 48, 49, 50};
-                change_x = -step;
-                setCurrentSprite(frames[(int) (Math.random() * 4)]);
-            }
-            case KeyEvent.VK_D -> {
-                int[] frames = {31, 32, 33, 34};
-                change_x = step;
-                setCurrentSprite(frames[(int) (Math.random() * 4)]);
-            }
-            case KeyEvent.VK_UP, KeyEvent.VK_DOWN -> angled = facing;
-            case KeyEvent.VK_SPACE -> throwBall();
         }
+        else if (getX_pos() == player.getX_pos()){
+            int probability = (int) (Math.random() * 3);
+            if (probability == 2)
+                change_y = step;
+                throwBall();
+        }
+        else
+            randomStep(player);
+
+        super.move();
     }
 
-    public void eventKeyRelease(KeyEvent e){
-        int key = e.getKeyCode();
-        switch (key) {
-            case KeyEvent.VK_W, KeyEvent.VK_S -> change_y = 0;
-            case KeyEvent.VK_A -> {
-                change_x = 0;
-                angled = "WEST";
-                if(facing.equals("SOUTH"))
-                    setCurrentSprite(51);
-                else
-                    setCurrentSprite(43);
-            }
-            case KeyEvent.VK_D -> {
-                change_x = 0;
-                angled = "EAST";
-                if(facing.equals("SOUTH"))
-                    setCurrentSprite(29);
-                else
-                    setCurrentSprite(38);
-            }
-        }
+    public void randomStep(Player player){
+        int idealDistance = 450;
+
+        if (player.getX_pos() > getX_pos())
+            change_x = step;
+        else if (player.getX_pos() < getX_pos())
+            change_x = -step;
+        if (player.getY_pos() - getY_pos() > idealDistance)
+            change_y = step;
+        else if (player.getY_pos() - getY_pos() < idealDistance)
+            change_y = -step;
     }
 
     public void grabBall(Ball ball){
-        if(ball.isVisible()){
+        if (ball.isVisible()){
             inventory.add(ball);
             ball.visible = false;
         }
@@ -162,5 +163,4 @@ public class Player extends Sprite{
         if (lives > 0)
             lives--;
     }
-
 }
