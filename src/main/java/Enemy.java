@@ -89,6 +89,22 @@ public class Enemy extends Sprite {
         else
             randomStep(player);
 
+        if (change_x < 0 && Math.abs(change_x) > change_y){
+            int[] frames = { 47, 48, 49, 50 };
+            setCurrentSprite(frames[(int) (Math.random() * 4)]);
+        }
+        else if (change_x > 0 && Math.abs(change_x) > change_y){
+            int[] frames = { 31, 32, 33, 34 };
+            setCurrentSprite(frames[(int) (Math.random() * 4)]);
+        }
+        else if (change_y < 0 && Math.abs(change_y) > change_x){
+            int[] frames = { 39, 40, 41, 42 };
+            setCurrentSprite(frames[(int) (Math.random() * 4)]);
+        }
+        else if (change_y > 0 && Math.abs(change_y) > change_x){
+            int[] frames = { 23, 24, 25, 26 };
+            setCurrentSprite(frames[(int) (Math.random() * 4)]);
+        }
         super.move();
     }
 
