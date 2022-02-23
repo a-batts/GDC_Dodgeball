@@ -27,10 +27,10 @@ public class Ball extends Sprite{
             change_x = step;
         else if (!collisions.canMove("RIGHT"))
             change_x = -step;
-        else if (!collisions.canMove("TOP")){
+        else if (!collisions.canMove("UP")){
             change_y = step;
         }
-        else if (!collisions.canMove("BOTTOM")){
+        else if (!collisions.canMove("DOWN")){
             change_y = -step;
         }
 

@@ -1,8 +1,5 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
+import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Sprite {
     protected Image currentSprite;
@@ -25,7 +22,7 @@ public class Sprite {
     }
 
     public Sprite(double scale, double speed){
-        this(scale, 0, 0, 1);
+        this(scale, 0, 0, speed);
     }
 
     public void buildSprites(SpritesheetBuilder builder){
@@ -50,9 +47,9 @@ public class Sprite {
             x_pos += change_x * speed;
         if (collisions.canMove("RIGHT") && change_x >= 0)
             x_pos += change_x * speed;
-        if (collisions.canMove("TOP") && change_y < 0)
+        if (collisions.canMove("UP") && change_y < 0)
             y_pos += change_y * speed;
-        if (collisions.canMove("BOTTOM") && change_y >= 0)
+        if (collisions.canMove("DOWN") && change_y >= 0)
             y_pos += change_y * speed;
     }
 
@@ -87,5 +84,9 @@ public class Sprite {
 
     public boolean isVisible() {
         return visible;
+    }
+
+    public int calculateDistance(Sprite b){
+        return (int) Math.sqrt((b.getX_pos() - getX_pos())^2 + (b.getY_pos() - getY_pos())^2);
     }
 }

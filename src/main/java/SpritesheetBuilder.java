@@ -1,10 +1,10 @@
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 public class SpritesheetBuilder {
 
@@ -12,7 +12,7 @@ public class SpritesheetBuilder {
 
     private BufferedImage spritesheet;
 
-    public SpritesheetBuilder setFile(String file){
+    public SpritesheetBuilder setFile(String file) {
         File f = new File(file);
         try {
             spritesheet = ImageIO.read(f);
@@ -22,21 +22,21 @@ public class SpritesheetBuilder {
         return this;
     }
 
-    public SpritesheetBuilder setCoords(int[][][] coords){
+    public SpritesheetBuilder setCoords(int[][][] coords) {
         this.coords = coords;
         return this;
     }
 
-    public Spritesheet build(){
+    public Spritesheet build() {
         return build(false);
     }
 
-    public Spritesheet build(boolean isSingleSprite){
+    public Spritesheet build(boolean isSingleSprite) {
         int[][][] coords = this.coords;
         BufferedImage spritesheet = this.spritesheet;
 
         ArrayList<BufferedImage> spritesList = new ArrayList<>();
-        if(isSingleSprite){
+        if (isSingleSprite) {
             spritesList.add(spritesheet);
             return new Spritesheet(spritesList);
         }
@@ -52,6 +52,5 @@ public class SpritesheetBuilder {
 
         return new Spritesheet(spritesList);
     }
-
 
 }

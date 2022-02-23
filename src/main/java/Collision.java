@@ -25,9 +25,12 @@ public class Collision {
         if (sprite instanceof Player)
             spriteTopBound = Dodgeball.SCREEN_MIDPOINT;
 
+        if (sprite instanceof Enemy)
+            spriteBottomBound = Dodgeball.SCREEN_MIDPOINT;
+
         return switch (direction) {
-            case "TOP" -> sprite_y - sprite.change_y > spriteTopBound;
-            case "BOTTOM" -> (sprite_y + sprite_height + sprite.change_y) < spriteBottomBound;
+            case "UP" -> sprite_y - sprite.change_y > spriteTopBound;
+            case "DOWN" -> (sprite_y + sprite_height + sprite.change_y) < spriteBottomBound;
             case "LEFT" -> sprite_x - sprite.change_x > spriteLeftBound;
             case "RIGHT" -> (sprite_x + sprite_width + sprite.change_x) < spriteRightBound;
             default -> true;
@@ -35,7 +38,7 @@ public class Collision {
     }
 
     public boolean atXBoundry(){
-        return ! (canMove("TOP") && canMove("BOTTOM"));
+        return ! (canMove("UP") && canMove("DOWN"));
     }
 
     public boolean atYBoundry(){

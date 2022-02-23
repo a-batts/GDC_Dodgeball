@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Gameboard extends JPanel implements ActionListener {
 
     private Player player;
+    private Enemy enemy;
     private final ArrayList<Ball> balls = new ArrayList<>();
 
     static final int TICK_DELAY_MS = 10;
@@ -22,6 +23,7 @@ public class Gameboard extends JPanel implements ActionListener {
         setFocusable(true);
 
         player = new Player();
+        enemy = new Enemy();
 
         int numberBalls = 6;
         int xStep = Dodgeball.SCREEN_WIDTH / numberBalls / 2;
@@ -43,6 +45,7 @@ public class Gameboard extends JPanel implements ActionListener {
 
     public void tick(){
         player.move();
+        enemy.move(balls, player);
         updateBalls();
 
         repaint();
@@ -57,6 +60,11 @@ public class Gameboard extends JPanel implements ActionListener {
                     b.move();
                     b.stopMoving();
                 }
+                else if (Collision.isCollidingWithOther(enemy, b) && ! enemy.getInventory().contains(b)){
+                    enemy.removeLife();
+                    b.move();
+                    b.stopMoving();
+                }
 
                 ArrayList<Sprite> spr = new ArrayList<Sprite>(balls);
                 if (Collision.isCollidingWithOther(b, spr)){
@@ -68,6 +76,8 @@ public class Gameboard extends JPanel implements ActionListener {
             else{
                 if (player.inventorySize() < 2 && Collision.isCollidingWithOther(player, b))
                     player.grabBall(b);
+                else if (enemy.inventorySize() < 2 && Collision.isCollidingWithOther(enemy, b))
+                    enemy.grabBall(b);
             }
         }
     }
@@ -90,6 +100,7 @@ public class Gameboard extends JPanel implements ActionListener {
                 painter.drawImage(b.currentSprite(),b.getX_pos(), b.getY_pos(), b.getWidth(), b.getHeight(), this);
         }
         painter.drawImage(player.currentSprite(), player.getX_pos(), player.getY_pos(), player.getWidth(), player.getHeight(), this);
+        painter.drawImage(enemy.currentSprite(), enemy.getX_pos(), enemy.getY_pos(), enemy.getWidth(), enemy.getHeight(), this);
 
         drawScoreboard(painter);
     }
