@@ -1,8 +1,5 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.ArrayList;
+import java.awt.Image;
+import java.awt.Rectangle;
 
 public class Sprite {
     protected Image currentSprite;
@@ -25,7 +22,7 @@ public class Sprite {
     }
 
     public Sprite(double scale, double speed){
-        this(scale, 0, 0, 1);
+        this(scale, 0, 0, speed);
     }
 
     public void buildSprites(SpritesheetBuilder builder){
