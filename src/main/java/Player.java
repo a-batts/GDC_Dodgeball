@@ -9,6 +9,8 @@ public class Player extends Sprite {
     private int lives;
     private ArrayList<Ball> inventory = new ArrayList<>();
 
+    public static int INIT_LIVES = 3;
+
     public Player() {
         this(3);
     }
@@ -61,7 +63,7 @@ public class Player extends Sprite {
         setCurrentSprite(16);
 
         this.step = movementStep;
-        this.lives = 3;
+        this.lives = INIT_LIVES;
     }
 
     public void eventKeyPress(KeyEvent e) {
@@ -172,6 +174,10 @@ public class Player extends Sprite {
     public void removeLife() {
         if (lives > 0)
             lives--;
+    }
+
+    public void clearInventory(){
+        inventory = new ArrayList<>();
     }
 
 }

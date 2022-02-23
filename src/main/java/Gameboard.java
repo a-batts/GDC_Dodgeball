@@ -10,18 +10,21 @@ public class Gameboard extends JPanel implements ActionListener {
 
     private Player player;
     private Enemy enemy;
-    private final ArrayList<Ball> balls = new ArrayList<>();
+    private ArrayList<Ball> balls;
+    private final Timer timer = new Timer(TICK_DELAY_MS, this);
+
+    private int previousWins = 0;
+    private boolean running = true;
 
     static final int TICK_DELAY_MS = 10;
 
     public Gameboard(){
+        addKeyListener(new KeyPress());
+        setFocusable(true);
         setup();
     }
 
     public void setup() {
-        addKeyListener(new KeyPress());
-        setFocusable(true);
-
         player = new Player();
         enemy = new Enemy();
 
@@ -29,13 +32,13 @@ public class Gameboard extends JPanel implements ActionListener {
         int xStep = Dodgeball.SCREEN_WIDTH / numberBalls / 2;
         int currentX = xStep - 5;
 
+        balls = new ArrayList<>();
         for (int i = 0; i < numberBalls; i++){
             balls.add(new Ball(2, currentX, Dodgeball.SCREEN_MIDPOINT));
             currentX += (2 * xStep);
         }
-
-        Timer timer = new Timer(TICK_DELAY_MS, this);
         timer.start();
+        running = true;
     }
 
     @Override
@@ -44,9 +47,15 @@ public class Gameboard extends JPanel implements ActionListener {
     }
 
     public void tick(){
-        player.move();
-        enemy.move(balls, player);
-        updateBalls();
+        if (player.getLives() > 0 && enemy.getLives() > 0){
+            player.move();
+            enemy.move(balls, player);
+            updateBalls();
+        }
+        else{
+            running = false;
+            player.clearInventory();
+        }
 
         repaint();
     }
@@ -66,7 +75,7 @@ public class Gameboard extends JPanel implements ActionListener {
                     b.stopMoving();
                 }
 
-                ArrayList<Sprite> spr = new ArrayList<Sprite>(balls);
+                ArrayList<Sprite> spr = new ArrayList<>(balls);
                 if (Collision.isCollidingWithOther(b, spr)){
                     Ball ballToMove = (Ball) Collision.getCollidedWith(b, spr);
                     if (ballToMove != null)
@@ -103,6 +112,21 @@ public class Gameboard extends JPanel implements ActionListener {
         painter.drawImage(enemy.currentSprite(), enemy.getX_pos(), enemy.getY_pos(), enemy.getWidth(), enemy.getHeight(), this);
 
         drawScoreboard(painter);
+
+        painter.setFont(new Font("Consolas", Font.PLAIN, 90));
+        if(!running){
+            if (player.getLives() == 0){
+                painter.setColor(Color.RED);
+                painter.drawString("YOU LOST, GAME OVER", 20, Dodgeball.SCREEN_MIDPOINT + 160);
+            }
+            else if (enemy.getLives() == 0){
+                painter.setColor(Color.BLACK);
+                painter.drawString("YOU WON, GOOD GAME", 50, Dodgeball.SCREEN_MIDPOINT + 160);
+            }
+            painter.setFont(new Font("Consolas", Font.PLAIN, 25));
+            painter.setColor(Color.BLACK);
+            painter.drawString("Press enter to start a new game!", 50, Dodgeball.SCREEN_MIDPOINT + 230);
+        }
     }
 
     private void drawScoreboard(Graphics2D painter) {
@@ -123,12 +147,24 @@ public class Gameboard extends JPanel implements ActionListener {
             x_pos = x_pos - step - spriteSize;
         }
 
+        painter.setFont(new Font("Consolas", Font.PLAIN, 20));
+        painter.setColor(Color.BLACK);
+        painter.drawString("Score: " + (Enemy.INIT_LIVES - enemy.getLives()), 31, 85);
+        painter.drawString("Wins: " + previousWins, 31, 115);
+
     }
 
     private class KeyPress extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            player.eventKeyPress(e);
+            if (!running && e.getKeyCode() == KeyEvent.VK_ENTER){
+                if (enemy.getLives() == 0)
+                    previousWins++;
+                timer.stop();
+                setup();
+            }
+            else
+                player.eventKeyPress(e);
         }
         @Override
         public void keyReleased(KeyEvent e) {
