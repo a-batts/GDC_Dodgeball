@@ -7,6 +7,12 @@ public class Ball extends Sprite{
 
     private int timeInMotion = 0;
 
+    /**
+     * Initialize a new ball
+     * @param movementStep step to change on tick
+     * @param x_pos init x position
+     * @param y_pos init y position
+     */
     public Ball(int movementStep, int x_pos, int y_pos){
         super(1, 2, 0, 2);
         String path = "src/main/resources/sprite/dodgeball.png";
@@ -17,6 +23,11 @@ public class Ball extends Sprite{
         this.setPosition(x_pos - this.getWidth() / 2, y_pos - this.getHeight() / 2);
     }
 
+    /**
+     * Set ball into motion on throw
+     * @param change_x x step to change on tick
+     * @param change_y y step to change on tick
+     */
     public void thrown(int change_x, int change_y){
         isMoving = true;
         timeInMotion = 0;
@@ -24,6 +35,10 @@ public class Ball extends Sprite{
         this.change_y = change_y;
     }
 
+    /**
+     * Bounces ball on collision with wall
+     * @param collisions Collision object for ball
+     */
     public void bounce(Collision collisions){
         if (!collisions.canMove("LEFT"))
             change_x = step;
@@ -41,6 +56,10 @@ public class Ball extends Sprite{
 
     }
 
+    /**
+     * Transfer momentum of ball on hit
+     * @param hitBy Ball that collided with instance
+     */
     public void collide(Ball hitBy) {
         hitBy.stopMoving();
         change_y = hitBy.change_y;
@@ -77,10 +96,18 @@ public class Ball extends Sprite{
         return step;
     }
 
+    /**
+     * Return if the ball is moving
+     * @return boolean
+     */
     public boolean isMoving(){
         return isMoving;
     }
 
+    /**
+     * Return how long the ball has been traveling for
+     * @return int
+     */
     public int getTimeInMotion() { return timeInMotion; }
 
 }

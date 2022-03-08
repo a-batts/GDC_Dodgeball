@@ -14,6 +14,11 @@ public class SpritesheetBuilder {
 
     private BufferedImage spritesheet;
 
+    /**
+     * Set file to pick sprite frames from
+     * @param file Path of file
+     * @return this
+     */
     public SpritesheetBuilder setFile(String file) {
         File f = new File(file);
         try {
@@ -24,6 +29,11 @@ public class SpritesheetBuilder {
         return this;
     }
 
+    /**
+     * Set coordinates of sprite frame bounds
+     * @param coords three dimensional array of bounds
+     * @return this
+     */
     public SpritesheetBuilder setCoords(int[][][] coords) {
         this.coords = coords;
         return this;
@@ -33,6 +43,11 @@ public class SpritesheetBuilder {
         return build(false);
     }
 
+    /**
+     * Build frames from specified coordinates and add sliced frames to ArrayList
+     * @param isSingleSprite If the chosen spritesheet only contains a single frame
+     * @return Spritesheet holding created arraylist
+     */
     public Spritesheet build(boolean isSingleSprite) {
         int[][][] coords = this.coords;
         BufferedImage spritesheet = this.spritesheet;

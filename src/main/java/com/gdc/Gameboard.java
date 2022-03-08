@@ -20,12 +20,18 @@ public class Gameboard extends JPanel implements ActionListener {
 
     static final int TICK_DELAY_MS = 10;
 
+    /**
+     * Create new gameboard and add a keypress listener
+     */
     public Gameboard(){
         addKeyListener(new KeyPress());
         setFocusable(true);
         setup();
     }
 
+    /**
+     * Setup entities and run tick timer
+     */
     public void setup() {
         player = new Player();
         enemy = new Enemy();
@@ -43,11 +49,17 @@ public class Gameboard extends JPanel implements ActionListener {
         running = true;
     }
 
+    /**
+     * Do tick on timer update
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         tick();
     }
 
+    /**
+     * Tick - handle updating and movement
+     */
     public void tick(){
         if (player.getLives() > 0 && enemy.getLives() > 0){
             player.move();
@@ -62,6 +74,9 @@ public class Gameboard extends JPanel implements ActionListener {
         repaint();
     }
 
+    /**
+     * Update position of balls if moving and update entity lives
+     */
     public void updateBalls(){
         for (Ball b : balls) {
             if (b.isMoving()){
@@ -93,6 +108,9 @@ public class Gameboard extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Paint on the gameboard
+     */
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -100,6 +118,9 @@ public class Gameboard extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * Runs on tick - handles painting all necessary items to gameboard
+     */
     private void draw(Graphics graphics) {
         Graphics2D painter = (Graphics2D) graphics;
 
@@ -131,6 +152,9 @@ public class Gameboard extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Draw scoreboard handling lives and held balls
+     */
     private void drawScoreboard(Graphics2D painter) {
         int step = 15;
         int x_pos = 25;
@@ -156,6 +180,9 @@ public class Gameboard extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Run on keypress
+     */
     private class KeyPress extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
