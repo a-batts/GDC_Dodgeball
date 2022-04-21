@@ -1,4 +1,4 @@
-package com.gdc;
+package com.gdc.spritesheet;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,7 @@
-package com.gdc;
+package com.gdc.entity;
+
+import com.gdc.spritesheet.Spritesheet;
+import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.awt.Image;
 import java.awt.Rectangle;

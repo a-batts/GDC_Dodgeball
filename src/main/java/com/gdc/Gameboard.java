@@ -1,5 +1,8 @@
 package com.gdc;
 
+import com.gdc.entity.*;
+import com.gdc.entity.Collision;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +21,7 @@ public class Gameboard extends JPanel implements ActionListener {
     private int previousWins = 0;
     private boolean running = true;
 
-    static final int TICK_DELAY_MS = 10;
+    public static final int TICK_DELAY_MS = 10;
 
     /**
      * Create new gameboard and add a keypress listener
@@ -37,12 +40,12 @@ public class Gameboard extends JPanel implements ActionListener {
         enemy = new Enemy();
 
         int numberBalls = 6;
-        int xStep = Dodgeball.SCREEN_WIDTH / numberBalls / 2;
+        int xStep = Game.SCREEN_WIDTH / numberBalls / 2;
         int currentX = xStep - 5;
 
         balls = new ArrayList<>();
         for (int i = 0; i < numberBalls; i++){
-            balls.add(new Ball(2, currentX, Dodgeball.SCREEN_MIDPOINT));
+            balls.add(new Ball(2, currentX, Game.SCREEN_MIDPOINT));
             currentX += (2 * xStep);
         }
         timer.start();
@@ -140,15 +143,15 @@ public class Gameboard extends JPanel implements ActionListener {
         if(!running){
             if (player.getLives() == 0){
                 painter.setColor(Color.RED);
-                painter.drawString("YOU LOST, GAME OVER", 20, Dodgeball.SCREEN_MIDPOINT + 160);
+                painter.drawString("YOU LOST, GAME OVER", 20, Game.SCREEN_MIDPOINT + 160);
             }
             else if (enemy.getLives() == 0){
                 painter.setColor(Color.BLACK);
-                painter.drawString("YOU WON, GOOD GAME", 50, Dodgeball.SCREEN_MIDPOINT + 160);
+                painter.drawString("YOU WON, GOOD GAME", 50, Game.SCREEN_MIDPOINT + 160);
             }
             painter.setFont(new Font("Consolas", Font.PLAIN, 25));
             painter.setColor(Color.BLACK);
-            painter.drawString("Press enter to start a new game!", 50, Dodgeball.SCREEN_MIDPOINT + 230);
+            painter.drawString("Press enter to start a new game!", 50, Game.SCREEN_MIDPOINT + 230);
         }
     }
 
@@ -167,7 +170,7 @@ public class Gameboard extends JPanel implements ActionListener {
         }
 
         Image ball = new ImageIcon("src/main/resources/sprite/dodgeball_outlined.png").getImage();
-        x_pos = Dodgeball.SCREEN_WIDTH - 70;
+        x_pos = Game.SCREEN_WIDTH - 70;
         for(int i = 0; i < player.inventorySize(); i ++){
             painter.drawImage(ball, x_pos, 30, spriteSize, spriteSize, this);
             x_pos = x_pos - step - spriteSize;

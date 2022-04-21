@@ -3,13 +3,13 @@ package com.gdc;
 import javax.swing.*;
 import java.awt.EventQueue;
 
-public class Dodgeball extends JFrame {
+public class Game extends JFrame {
 
-    final static int SCREEN_HEIGHT = 700;
-    final static int SCREEN_WIDTH = 1000;
-    static int SCREEN_MIDPOINT;
+    public final static int SCREEN_HEIGHT = 700;
+    public final static int SCREEN_WIDTH = 1000;
+    public static int SCREEN_MIDPOINT;
 
-    public Dodgeball(){
+    public Game(){
         SCREEN_MIDPOINT = SCREEN_HEIGHT / 2 - 15;
 
         load();
@@ -21,7 +21,7 @@ public class Dodgeball extends JFrame {
     public void load(){
         add(new Gameboard());
         setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        setTitle("Cat com.gdc.Dodgeball");
+        setTitle("Cat Dodgeball");
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +33,7 @@ public class Dodgeball extends JFrame {
      */
     public static void main(String[] args){
         EventQueue.invokeLater(() -> {
-            Dodgeball game = new Dodgeball();
+            Game game = new Game();
             game.setVisible(true);
         });
     }

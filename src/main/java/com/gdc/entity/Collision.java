@@ -1,4 +1,6 @@
-package com.gdc;
+package com.gdc.entity;
+
+import com.gdc.Game;
 
 import java.util.ArrayList;
 
@@ -6,9 +8,9 @@ public class Collision {
 
     Sprite sprite;
     int sprite_x, sprite_y, sprite_width, sprite_height;
-    int scr_width = Dodgeball.SCREEN_WIDTH - 14;
+    int scr_width = Game.SCREEN_WIDTH - 14;
     //Subtract for title bar height
-    int scr_height = Dodgeball.SCREEN_HEIGHT - 36;
+    int scr_height = Game.SCREEN_HEIGHT - 36;
 
     /**
      * Initialize new collision object
@@ -34,10 +36,10 @@ public class Collision {
         int spriteRightBound = scr_width;
 
         if (sprite instanceof Player)
-            spriteTopBound = Dodgeball.SCREEN_MIDPOINT;
+            spriteTopBound = Game.SCREEN_MIDPOINT;
 
         if (sprite instanceof Enemy)
-            spriteBottomBound = Dodgeball.SCREEN_MIDPOINT;
+            spriteBottomBound = Game.SCREEN_MIDPOINT;
 
         return switch (direction) {
             case "UP" -> sprite_y - sprite.change_y > spriteTopBound;
@@ -52,7 +54,7 @@ public class Collision {
      * Get if sprite is at its max or min possible X
      * @return boolean
      */
-    public boolean atXBoundry(){
+    public boolean atXBBoundary(){
         return ! (canMove("UP") && canMove("DOWN"));
     }
 
@@ -60,7 +62,7 @@ public class Collision {
      * Get if sprite is at its max or min possible Y
      * @return boolean
      */
-    public boolean atYBoundry(){
+    public boolean atYBBoundary(){
         return ! (canMove("LEFT") && canMove("RIGHT"));
     }
 

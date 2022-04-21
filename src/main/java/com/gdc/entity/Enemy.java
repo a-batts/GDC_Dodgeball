@@ -1,4 +1,7 @@
-package com.gdc;
+package com.gdc.entity;
+
+import com.gdc.Game;
+import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class Enemy extends Sprite {
     }
 
     public Enemy(int movementStep) {
-        super(2.5, Dodgeball.SCREEN_WIDTH / 2, 100, 1.01);
+        super(2.5, Game.SCREEN_WIDTH / 2, 100, 1.01);
 
         String dir = "src/main/resources/sprite/player/";
         File[] files = new File(dir).listFiles();
@@ -62,7 +65,7 @@ public class Enemy extends Sprite {
             int lowestDistance = Integer.MAX_VALUE;
             Ball closestBall = null;
             for(Ball b: balls){
-                if (! b.isMoving() && b.getY_pos() < Dodgeball.SCREEN_MIDPOINT){
+                if (! b.isMoving() && b.getY_pos() < Game.SCREEN_MIDPOINT){
                     int distance = this.calculateDistance(b);
                     if (distance < lowestDistance){
                         lowestDistance = distance;

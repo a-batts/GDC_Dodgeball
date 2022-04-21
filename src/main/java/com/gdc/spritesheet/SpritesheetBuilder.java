@@ -1,4 +1,4 @@
-package com.gdc;
+package com.gdc.spritesheet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -1,4 +1,7 @@
-package com.gdc;
+package com.gdc.entity;
+
+import com.gdc.Game;
+import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -18,7 +21,7 @@ public class Player extends Sprite {
     }
 
     public Player(int movementStep) {
-        super(2.5, Dodgeball.SCREEN_WIDTH / 2, Dodgeball.SCREEN_HEIGHT - 100, 1.5);
+        super(2.5, Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT - 100, 1.5);
 
         String dir = "src/main/resources/sprite/player/";
         File[] files = new File(dir).listFiles();

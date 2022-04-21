@@ -1,6 +1,9 @@
-package com.gdc;
+package com.gdc.entity;
 
-public class Ball extends Sprite{
+import com.gdc.Gameboard;
+import com.gdc.spritesheet.SpritesheetBuilder;
+
+public class Ball extends Sprite {
 
     private final int step;
     private boolean isMoving = false;
@@ -79,7 +82,7 @@ public class Ball extends Sprite{
 
         if(speed > 0) {
             Collision collisions = new Collision(this);
-            if (collisions.atYBoundry() || collisions.atXBoundry()){
+            if (collisions.atYBBoundary() || collisions.atXBBoundary()){
                 bounce(collisions);
             }
             super.move();
