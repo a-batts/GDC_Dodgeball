@@ -36,7 +36,7 @@ public class Inventory<E> {
     }
 
     public boolean hasEmptyHand(){
-        return handLeft != null || handRight != null;
+        return handLeft == null || handRight == null;
     }
 
     public void take(E o){
