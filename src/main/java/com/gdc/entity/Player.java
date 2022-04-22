@@ -5,14 +5,13 @@ import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Player extends Sprite {
 
     private final int step;
     private int lives;
-    private ArrayList<Ball> inventory = new ArrayList<>();
+    private final Inventory<Ball> inventory = new Inventory<>();
 
     public static int INIT_LIVES = 3;
 
@@ -128,14 +127,14 @@ public class Player extends Sprite {
 
     public void grabBall(Ball ball) {
         if (ball.isVisible()) {
-            inventory.add(ball);
+            inventory.take(ball);
             ball.visible = false;
         }
     }
 
     public void throwBall() {
-        if (inventorySize() > 0) {
-            Ball b = inventory.get(0);
+        if (inventory.size() > 0) {
+            Ball b = inventory.getFirst();
 
             int y_pos;
             int changeX;
@@ -155,20 +154,11 @@ public class Player extends Sprite {
             b.setPosition(x_pos, y_pos);
             b.thrown(changeX, changeY);
             b.visible = true;
-            inventory.remove(b);
+            inventory.drop(b);
         }
     }
 
-    public int inventorySize() {
-        int c = 0;
-        for (Ball b : inventory) {
-            if (!b.isMoving())
-                c++;
-        }
-        return c;
-    }
-
-    public ArrayList<Ball> getInventory() {
+    public Inventory<Ball> getInventory() {
         return inventory;
     }
 
@@ -179,10 +169,6 @@ public class Player extends Sprite {
     public void removeLife() {
         if (lives > 0)
             lives--;
-    }
-
-    public void clearInventory(){
-        inventory = new ArrayList<>();
     }
 
 }

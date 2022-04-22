@@ -1,4 +1,4 @@
-package com.gdc;
+package com.gdc.sound;
 
 import javax.sound.sampled.*;
 import javax.swing.*;

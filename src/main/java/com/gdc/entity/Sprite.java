@@ -5,6 +5,7 @@ import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.util.List;
 
 public class Sprite {
     protected Image currentSprite;
@@ -15,9 +16,10 @@ public class Sprite {
     protected double change_x, change_y;
     protected double speed;
     protected double scale;
-    protected boolean visible = true;
     protected String facing = "NORTH";
     protected String angled = "NORTH";
+
+    protected boolean visible = true;
 
     /**
      * Initialize sprite
@@ -72,7 +74,7 @@ public class Sprite {
      * Move sprite if collisions do not prevent
      */
     public void move(){
-        Collision collisions = new Collision(this);
+        CollisionHandler collisions = new CollisionHandler(this);
         if (collisions.canMove("LEFT") && change_x < 0)
             x_pos += change_x * speed;
         if (collisions.canMove("RIGHT") && change_x >= 0)
@@ -119,11 +121,20 @@ public class Sprite {
         return visible;
     }
 
-    /**
-     * Calculate distance between instance and other sprite
-     * @param b Sprite to check distance from
-     * @return Distance
-     */
+
+
+    public boolean isCollidingWith(Sprite b){
+        return CollisionHandler.checkIfColliding(this, b);
+    }
+
+    public Sprite isCollidingWith(List<Sprite> b){
+        for (Sprite s: b){
+            if (this.isCollidingWith(s))
+                return s;
+        }
+        return null;
+    }
+
     public int calculateDistance(Sprite b){
         return (int) Math.sqrt((b.getX_pos() - getX_pos())^2 + (b.getY_pos() - getY_pos())^2);
     }

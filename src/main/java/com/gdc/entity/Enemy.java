@@ -11,7 +11,7 @@ public class Enemy extends Sprite {
 
     private final int step;
     private int lives;
-    private ArrayList<Ball> inventory = new ArrayList<>();
+    private final Inventory<Ball> inventory = new Inventory<>();
 
     public static int INIT_LIVES = 3;
 
@@ -61,11 +61,11 @@ public class Enemy extends Sprite {
     public void move(ArrayList<Ball> balls, Player player){
         change_x = 0;
         change_y = 0;
-        if(inventorySize() == 0){
+        if(inventory.size() == 0){
             int lowestDistance = Integer.MAX_VALUE;
             Ball closestBall = null;
             for(Ball b: balls){
-                if (! b.isMoving() && b.getY_pos() < Game.SCREEN_MIDPOINT){
+                if (! b.isInMotion() && b.getY_pos() < Game.SCREEN_MIDPOINT){
                     int distance = this.calculateDistance(b);
                     if (distance < lowestDistance){
                         lowestDistance = distance;
@@ -130,14 +130,14 @@ public class Enemy extends Sprite {
 
     public void grabBall(Ball ball){
         if (ball.isVisible()){
-            inventory.add(ball);
+            inventory.take(ball);
             ball.visible = false;
         }
     }
 
     public void throwBall(){
-        if (inventorySize() > 0){
-            Ball b = inventory.get(0);
+        if (inventory.size() > 0){
+            Ball b = inventory.getFirst();
 
             int y_pos; int changeX; int changeY;
             if (facing.equals("SOUTH")){
@@ -156,20 +156,11 @@ public class Enemy extends Sprite {
             b.setPosition(x_pos, y_pos);
             b.thrown(changeX, changeY);
             b.visible = true;
-            inventory.remove(b);
+            inventory.drop(b);
         }
     }
 
-    public int inventorySize(){
-        int c = 0;
-        for(Ball b: inventory){
-            if (! b.isMoving())
-                c++;
-        }
-        return c;
-    }
-
-    public ArrayList<Ball> getInventory() {
+    public Inventory<Ball> getInventory() {
         return inventory;
     }
 

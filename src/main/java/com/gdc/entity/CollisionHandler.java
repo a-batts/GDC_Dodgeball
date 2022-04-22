@@ -2,9 +2,7 @@ package com.gdc.entity;
 
 import com.gdc.Game;
 
-import java.util.ArrayList;
-
-public class Collision {
+public class CollisionHandler {
 
     Sprite sprite;
     int sprite_x, sprite_y, sprite_width, sprite_height;
@@ -16,7 +14,7 @@ public class Collision {
      * Initialize new collision object
      * @param sprite sprite to initialize collision check on
      */
-    public Collision(Sprite sprite) {
+    public CollisionHandler(Sprite sprite) {
         this.sprite = sprite;
         sprite_x = sprite.getX_pos();
         sprite_width = sprite.getWidth();
@@ -72,38 +70,9 @@ public class Collision {
      * @param b Second sprite
      * @return boolean
      */
-    public static boolean isCollidingWithOther(Sprite a, Sprite b){
+    public static boolean checkIfColliding(Sprite a, Sprite b){
         return a.getBounds().intersects(b.getBounds());
     }
-
-    /**
-     * Check if two sprites are colliding - static
-     * @param a Sprite one
-     * @param b List of sprites to check
-     * @return boolean
-     */
-    public static boolean isCollidingWithOther(Sprite a, ArrayList<Sprite> b){
-        for(Sprite s: b){
-            if (a.getBounds().intersects(s.getBounds()) && s != a)
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Get sprite from list that is colliding with other sprite
-     * @param a Sprite one
-     * @param b List of sprites to check
-     * @return Colliding sprite
-     */
-    public static Sprite getCollidedWith(Sprite a, ArrayList<Sprite> b) {
-        for(Sprite s: b){
-            if (isCollidingWithOther(a, s))
-                return s;
-        }
-        return null;
-    }
-
 
 
 }

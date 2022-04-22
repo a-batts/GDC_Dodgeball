@@ -1,14 +1,18 @@
 package com.gdc.entity;
 
-import com.gdc.Gameboard;
+import com.gdc.Board;
 import com.gdc.spritesheet.SpritesheetBuilder;
 
 public class Ball extends Sprite {
 
+    private Sprite thrownBy;
+
+    private boolean inMotion = false;
+
     private final int step;
-    private boolean isMoving = false;
 
     private int timeInMotion = 0;
+
 
     /**
      * Initialize a new ball
@@ -32,7 +36,7 @@ public class Ball extends Sprite {
      * @param change_y y step to change on tick
      */
     public void thrown(int change_x, int change_y){
-        isMoving = true;
+        inMotion = true;
         timeInMotion = 0;
         this.change_x = change_x;
         this.change_y = change_y;
@@ -42,7 +46,7 @@ public class Ball extends Sprite {
      * Bounces ball on collision with wall
      * @param collisions Collision object for ball
      */
-    public void bounce(Collision collisions){
+    public void bounce(CollisionHandler collisions){
         if (!collisions.canMove("LEFT"))
             change_x = step;
         else if (!collisions.canMove("RIGHT"))
@@ -55,7 +59,7 @@ public class Ball extends Sprite {
         }
 
         //Need to add test sound file in to check if sound class works
-        //com.gdc.Sound bounce = new com.gdc.Sound("src/main/resources/sound/bounce.wav");
+        //com.gdc.sound.Sound bounce = new com.gdc.sound.Sound("src/main/resources/sound/bounce.wav");
 
     }
 
@@ -67,12 +71,12 @@ public class Ball extends Sprite {
         hitBy.stopMoving();
         change_y = hitBy.change_y;
         timeInMotion = hitBy.getTimeInMotion();
-        isMoving = true;
+        inMotion = true;
     }
 
     @Override
     public void move(){
-        timeInMotion = (timeInMotion + Gameboard.TICK_DELAY_MS);
+        timeInMotion = (timeInMotion + Board.TICK_DELAY_MS);
 
         double speed = (15 -  .05 * ((timeInMotion - 18) ^ 2));
         if (change_y < 0)
@@ -81,18 +85,18 @@ public class Ball extends Sprite {
             change_y = speed;
 
         if(speed > 0) {
-            Collision collisions = new Collision(this);
+            CollisionHandler collisions = new CollisionHandler(this);
             if (collisions.atYBBoundary() || collisions.atXBBoundary()){
                 bounce(collisions);
             }
             super.move();
         }
         else
-            isMoving = false;
+            inMotion = false;
     }
 
     public void stopMoving(){
-        isMoving = false;
+        inMotion = false;
     }
 
     public int getStep(){
@@ -103,8 +107,8 @@ public class Ball extends Sprite {
      * Return if the ball is moving
      * @return boolean
      */
-    public boolean isMoving(){
-        return isMoving;
+    public boolean isInMotion(){
+        return inMotion;
     }
 
     /**
@@ -112,5 +116,9 @@ public class Ball extends Sprite {
      * @return int
      */
     public int getTimeInMotion() { return timeInMotion; }
+
+    public boolean thrownBy(Sprite b){
+        return thrownBy == b;
+    }
 
 }
