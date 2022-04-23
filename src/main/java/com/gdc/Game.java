@@ -44,7 +44,7 @@ public class Game extends JFrame {
         return GAMESTATE;
     }
 
-    public static void setGamestate(GameState state){
+    public static void setGameState(GameState state){
         GAMESTATE = state;
     }
 

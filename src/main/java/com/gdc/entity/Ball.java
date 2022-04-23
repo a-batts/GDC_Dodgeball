@@ -13,7 +13,6 @@ public class Ball extends Sprite {
 
     private int timeInMotion = 0;
 
-
     /**
      * Initialize a new ball
      * @param movementStep step to change on tick
@@ -117,8 +116,14 @@ public class Ball extends Sprite {
      */
     public int getTimeInMotion() { return timeInMotion; }
 
-    public boolean thrownBy(Sprite b){
+    public boolean wasThrownBy(Sprite b){
         return thrownBy == b;
     }
 
+    public void setThrownBy(Sprite b){ thrownBy = b; }
+
+    public void doHit() {
+        inMotion = false;
+        thrownBy = null;
+    }
 }

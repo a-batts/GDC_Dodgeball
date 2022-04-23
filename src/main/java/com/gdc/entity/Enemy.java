@@ -5,6 +5,7 @@ import com.gdc.spritesheet.SpritesheetBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Enemy extends Sprite {
@@ -58,7 +59,7 @@ public class Enemy extends Sprite {
         this.lives = INIT_LIVES;
     }
 
-    public void move(ArrayList<Ball> balls, Player player){
+    public void move(LinkedList<Ball> balls, Player player){
         change_x = 0;
         change_y = 0;
         if(inventory.size() == 0){
@@ -155,6 +156,7 @@ public class Enemy extends Sprite {
             }
             b.setPosition(x_pos, y_pos);
             b.thrown(changeX, changeY);
+            b.setThrownBy(this);
             b.visible = true;
             inventory.drop(b);
         }
@@ -171,5 +173,13 @@ public class Enemy extends Sprite {
     public void removeLife(){
         if (lives > 0)
             lives--;
+    }
+
+    public void reset(){
+        change_x = 0;
+        change_y = 0;
+        setPosition(Game.SCREEN_WIDTH / 2, 100);
+        inventory.empty();
+        lives = 3;
     }
 }

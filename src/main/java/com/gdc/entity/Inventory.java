@@ -27,6 +27,7 @@ public class Inventory<E> {
     public void empty(){
         handLeft = null;
         handRight = null;
+        size = 0;
     }
 
     public E getFirst(){

@@ -70,6 +70,61 @@ public class Player extends Sprite {
         this.lives = INIT_LIVES;
     }
 
+    public void grabBall(Ball ball) {
+        if (ball.isVisible()) {
+            inventory.take(ball);
+            ball.visible = false;
+        }
+    }
+
+    public void throwBall() {
+        if (inventory.size() > 0) {
+            Ball b = inventory.getFirst();
+
+            int y_pos;
+            int changeX;
+            int changeY;
+            if (facing.equals("SOUTH")) {
+                changeY = b.getStep();
+                y_pos = getBounds().y + getBounds().height;
+            } else {
+                changeY = -b.getStep();
+                y_pos = getBounds().y - getBounds().height / 2 - 5;
+            }
+            switch (angled) {
+                case "EAST" -> changeX = 2;
+                case "WEST" -> changeX = -2;
+                default -> changeX = 0;
+            }
+            b.setPosition(x_pos, y_pos);
+            b.thrown(changeX, changeY);
+            b.setThrownBy(this);
+            b.visible = true;
+            inventory.drop(b);
+        }
+    }
+
+    public Inventory<Ball> getInventory() {
+        return inventory;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void removeLife() {
+        if (lives > 0)
+            lives--;
+    }
+
+    public void reset(){
+        change_x = 0;
+        change_y = 0;
+        setPosition(Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT - 100);
+        inventory.empty();
+        lives = 3;
+    }
+
     public void eventKeyPress(KeyEvent e) {
         int key = e.getKeyCode();
         switch (key) {
@@ -123,52 +178,6 @@ public class Player extends Sprite {
                     setCurrentSprite(38);
             }
         }
-    }
-
-    public void grabBall(Ball ball) {
-        if (ball.isVisible()) {
-            inventory.take(ball);
-            ball.visible = false;
-        }
-    }
-
-    public void throwBall() {
-        if (inventory.size() > 0) {
-            Ball b = inventory.getFirst();
-
-            int y_pos;
-            int changeX;
-            int changeY;
-            if (facing.equals("SOUTH")) {
-                changeY = b.getStep();
-                y_pos = getBounds().y + getBounds().height;
-            } else {
-                changeY = -b.getStep();
-                y_pos = getBounds().y - getBounds().height / 2 - 5;
-            }
-            switch (angled) {
-                case "EAST" -> changeX = 2;
-                case "WEST" -> changeX = -2;
-                default -> changeX = 0;
-            }
-            b.setPosition(x_pos, y_pos);
-            b.thrown(changeX, changeY);
-            b.visible = true;
-            inventory.drop(b);
-        }
-    }
-
-    public Inventory<Ball> getInventory() {
-        return inventory;
-    }
-
-    public int getLives() {
-        return lives;
-    }
-
-    public void removeLife() {
-        if (lives > 0)
-            lives--;
     }
 
 }

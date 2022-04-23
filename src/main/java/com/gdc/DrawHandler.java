@@ -10,17 +10,32 @@ import java.awt.*;
 public class DrawHandler {
     private final Board board;
 
-
     public DrawHandler(Board board){
         this.board = board;
     }
 
     public void draw(Graphics graphics) {
         Graphics2D painter = (Graphics2D) graphics;
+        switch(Game.getGameState()){
+            case OUT_OF_GAME -> drawOutOfGame(painter);
+            case PAUSED -> drawPaused(painter);
+            case RUNNING -> drawInGame(painter);
+            case STOPPED -> drawStopped(painter);
+        }
+    }
+
+    private void drawOutOfGame(Graphics2D painter) {
+    }
+
+    private void drawPaused(Graphics2D painter){
+        painter.setFont(new Font("Consolas", Font.PLAIN, 90));
+        painter.setColor(Color.BLACK);
+        painter.drawString("PAUSED", 100, Game.SCREEN_MIDPOINT);
+        painter.setFont(new Font("Consolas", Font.PLAIN, 30));
+        painter.drawString("PRESS ESC TO CONTINUE", 100, Game.SCREEN_MIDPOINT + 40);
     }
 
     private void drawInGame(Graphics2D painter){
-
         Player player = board.player;
         Enemy enemy = board.enemy;
 
@@ -35,21 +50,6 @@ public class DrawHandler {
         painter.drawImage(enemy.currentSprite(), enemy.getX_pos(), enemy.getY_pos(), enemy.getWidth(), enemy.getHeight(), board);
 
         drawScoreboard(painter);
-
-        painter.setFont(new Font("Consolas", Font.PLAIN, 90));
-        if(Game.getGameState() == GameState.RUNNING) {
-            if (player.getLives() == 0){
-                painter.setColor(Color.RED);
-                painter.drawString("YOU LOST, GAME OVER", 20, Game.SCREEN_MIDPOINT + 160);
-            }
-            else if (enemy.getLives() == 0){
-                painter.setColor(Color.BLACK);
-                painter.drawString("YOU WON, GOOD GAME", 50, Game.SCREEN_MIDPOINT + 160);
-            }
-            painter.setFont(new Font("Consolas", Font.PLAIN, 25));
-            painter.setColor(Color.BLACK);
-            painter.drawString("Press enter to start a new game!", 50, Game.SCREEN_MIDPOINT + 230);
-        }
     }
 
     private void drawScoreboard(Graphics2D painter) {
@@ -78,5 +78,24 @@ public class DrawHandler {
         painter.drawString("Score: " + (Enemy.INIT_LIVES - enemy.getLives()), 31, 85);
         painter.drawString("Wins: " + Game.PREV_WINS, 31, 115);
 
+    }
+
+    private void drawStopped(Graphics2D painter){
+        Player player = board.player;
+        Enemy enemy = board.enemy;
+
+        painter.setFont(new Font("Consolas", Font.PLAIN, 90));
+
+        if (player.getLives() == 0){
+            painter.setColor(Color.RED);
+            painter.drawString("YOU LOST, GAME OVER", 20, Game.SCREEN_MIDPOINT + 160);
+        }
+        else if (enemy.getLives() == 0){
+            painter.setColor(Color.BLACK);
+            painter.drawString("YOU WON, GOOD GAME", 50, Game.SCREEN_MIDPOINT + 160);
+        }
+        painter.setFont(new Font("Consolas", Font.PLAIN, 25));
+        painter.setColor(Color.BLACK);
+        painter.drawString("Press enter to start a new game!", 50, Game.SCREEN_MIDPOINT + 230);
     }
 }

@@ -17,17 +17,19 @@ public class Board extends JPanel implements ActionListener {
     protected final Enemy enemy = new Enemy();
     protected final Player player = new Player();
 
-    private final Timer timer = new Timer(TICK_DELAY_MS, this);
-
-    private DrawHandler painter = new DrawHandler(this);
+    private final DrawHandler painter = new DrawHandler(this);
 
     public Board(){
         addKeyListener(new KeyPress());
         setFocusable(true);
         loadEntities();
+
+        Timer timer = new Timer(TICK_DELAY_MS, this);
+        timer.start();
     }
 
     public void loadEntities(){
+        balls.clear();
         int numberBalls = 6;
         int dx = Game.SCREEN_WIDTH / numberBalls / 2;
         int curx = dx - 5;
@@ -36,10 +38,6 @@ public class Board extends JPanel implements ActionListener {
             balls.add(new Ball(2, curx, Game.SCREEN_MIDPOINT));
             curx += dx * 2;
         }
-        timer.start();
-
-        //Set the game state to running
-        Game.setGamestate(GameState.RUNNING);
     }
 
     @Override
@@ -54,10 +52,18 @@ public class Board extends JPanel implements ActionListener {
             }
             case RUNNING -> {
                 player.move();
-                enemy.move();
+                enemy.move(balls, player);
                 doBallTick();
+
+                if (enemy.getLives() == 0 || player.getLives() == 0) {
+                    Game.setGameState(GameState.STOPPED);
+                    if (enemy.getLives() == 0)
+                        Game.PREV_WINS ++;
+                }
             }
-            case STOPPED -> player.getInventory().empty();
+            case STOPPED -> {
+                loadEntities();
+            }
         }
         repaint();
     }
@@ -66,15 +72,13 @@ public class Board extends JPanel implements ActionListener {
         for(Ball b: balls){
             if(b.isInMotion()){
                 b.move();
-                if (! b.thrownBy(player) && player.isCollidingWith(b)){
+                if (b.wasThrownBy(enemy) && player.isCollidingWith(b)) {
                     player.removeLife();
-                    b.move();
-                    b.stopMoving();
+                    b.doHit();
                 }
-                else if (! b.thrownBy(enemy) && enemy.isCollidingWith(b)){
+                else if (b.wasThrownBy(player) && enemy.isCollidingWith(b)){
                     enemy.removeLife();
-                    b.move();
-                    b.stopMoving();
+                    b.doHit();
                 }
 
                 Ball colliding = (Ball) b.isCollidingWith(new LinkedList<>(balls));
