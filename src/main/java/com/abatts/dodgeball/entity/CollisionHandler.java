@@ -1,6 +1,6 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
-import com.gdc.Game;
+import com.abatts.dodgeball.Game;
 
 public class CollisionHandler {
 

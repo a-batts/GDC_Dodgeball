@@ -1,4 +1,4 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
 public class Inventory<E> {
     private E handLeft;

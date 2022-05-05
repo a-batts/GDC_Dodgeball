@@ -1,4 +1,4 @@
-package com.gdc.sound;
+package com.abatts.dodgeball.sound;
 
 import javax.sound.sampled.*;
 import javax.swing.*;

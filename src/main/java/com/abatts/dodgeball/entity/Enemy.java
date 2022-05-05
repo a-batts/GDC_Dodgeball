@@ -1,10 +1,9 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
-import com.gdc.Game;
-import com.gdc.spritesheet.SpritesheetBuilder;
+import com.abatts.dodgeball.Game;
+import com.abatts.dodgeball.spritesheet.SpritesheetBuilder;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 

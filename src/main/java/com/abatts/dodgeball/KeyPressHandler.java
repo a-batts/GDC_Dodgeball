@@ -1,4 +1,4 @@
-package com.gdc;
+package com.abatts.dodgeball;
 
 import java.awt.event.KeyEvent;
 

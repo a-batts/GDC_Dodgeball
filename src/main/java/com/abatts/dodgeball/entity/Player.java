@@ -1,7 +1,7 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
-import com.gdc.Game;
-import com.gdc.spritesheet.SpritesheetBuilder;
+import com.abatts.dodgeball.Game;
+import com.abatts.dodgeball.spritesheet.SpritesheetBuilder;
 
 import java.awt.event.KeyEvent;
 import java.io.File;

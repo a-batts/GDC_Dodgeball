@@ -1,7 +1,7 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
-import com.gdc.spritesheet.Spritesheet;
-import com.gdc.spritesheet.SpritesheetBuilder;
+import com.abatts.dodgeball.spritesheet.Spritesheet;
+import com.abatts.dodgeball.spritesheet.SpritesheetBuilder;
 
 import java.awt.Image;
 import java.awt.Rectangle;

@@ -1,6 +1,9 @@
-package com.gdc;
+package com.abatts.dodgeball;
 
-import com.gdc.entity.*;
+import com.abatts.dodgeball.entity.Ball;
+import com.abatts.dodgeball.entity.Enemy;
+import com.abatts.dodgeball.entity.Player;
+import com.abatts.dodgeball.entity.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.gdc.spritesheet;
+package com.abatts.dodgeball.spritesheet;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -23,7 +23,7 @@ test {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'com.gdc.Ball'
+                'Main-Class': 'com.abatts.dodgeball.Game'
         )
     }
 }

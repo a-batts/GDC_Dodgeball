@@ -1,7 +1,7 @@
-package com.gdc.entity;
+package com.abatts.dodgeball.entity;
 
-import com.gdc.Board;
-import com.gdc.spritesheet.SpritesheetBuilder;
+import com.abatts.dodgeball.Board;
+import com.abatts.dodgeball.spritesheet.SpritesheetBuilder;
 
 public class Ball extends Sprite {
 
@@ -58,7 +58,7 @@ public class Ball extends Sprite {
         }
 
         //Need to add test sound file in to check if sound class works
-        //com.gdc.sound.Sound bounce = new com.gdc.sound.Sound("src/main/resources/sound/bounce.wav");
+        //com.gdc.dodgeball.sound.Sound bounce = new com.gdc.dodgeball.sound.Sound("src/main/resources/sound/bounce.wav");
 
     }
 
